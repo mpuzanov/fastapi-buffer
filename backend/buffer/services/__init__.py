@@ -33,4 +33,6 @@ from .common import (
     TipService,
     FinService,
     SupService,
+    TownService,
+    StreetService,
 )

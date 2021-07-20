@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from .config import settings
 
-engine = create_engine(settings.database_url)
+engine = create_engine(settings.database_url, fast_executemany=True, echo=False)
 
 
 Session = sessionmaker(
@@ -18,4 +18,3 @@ def get_session():
         yield session
     finally:
         session.close()
-

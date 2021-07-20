@@ -6,3 +6,9 @@ sqlalchemy
 pyodbc
 pytest
 requests
+passlib[bcrypt]
+python-jose[cryptography]
+python-multipart
+xlwt
+lxml
+icecream

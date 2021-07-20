@@ -2,6 +2,7 @@ from fastapi.testclient import TestClient
 from backend.buffer.main import app
 import xml.etree.ElementTree as ET
 import pytest
+from .conftest import user
 
 test_data = [   # tip_id, build_id, fin_id, sup_id
     (1, 6786, None, None),
@@ -13,7 +14,7 @@ test_data = [   # tip_id, build_id, fin_id, sup_id
 class TestApi:
 
     def setup(self):
-        self.client = client = TestClient(app)
+        self.client = TestClient(app)
         print('setup')
 
     @staticmethod
@@ -24,7 +25,7 @@ class TestApi:
     def test_get_buildings(self, tip_id, build_id, fin_id, sup_id):
         p = {'tip_id': tip_id, 'build_id': build_id,
              'fin_id': fin_id, 'sup_id': sup_id}
-        response = self.client.get("/api/buildings", params=p)
+        response = self.client.get("/api/buildings", params=p, auth=user)
         assert response.status_code == 200
         assert response.headers['Content-Type'] == "application/xml"
         root = ET.fromstring(response.text)
@@ -36,7 +37,7 @@ class TestApi:
         p = {'tip_id': tip_id, 'build_id': build_id,
              'fin_id': fin_id, 'sup_id': sup_id}
         response = self.client.get(
-            "/api/flats", params=p)
+            "/api/flats", params=p, auth=user)
         assert response.status_code == 200
         assert response.headers['Content-Type'] == "application/xml"
         root = ET.fromstring(response.text)
@@ -48,7 +49,7 @@ class TestApi:
         p = {'tip_id': tip_id, 'build_id': build_id,
              'fin_id': fin_id, 'sup_id': sup_id}
         response = self.client.get(
-            "/api/occ", params=p)
+            "/api/occ", params=p, auth=user)
         assert response.status_code == 200
         assert response.headers['Content-Type'] == "application/xml"
         root = ET.fromstring(response.text)
@@ -60,7 +61,7 @@ class TestApi:
         p = {'tip_id': tip_id, 'build_id': build_id,
              'fin_id': fin_id, 'sup_id': sup_id}
         response = self.client.get(
-            "/api/people", params=p)
+            "/api/people", params=p, auth=user)
         assert response.status_code == 200
         assert response.headers['Content-Type'] == "application/xml"
         root = ET.fromstring(response.text)
@@ -72,7 +73,7 @@ class TestApi:
         p = {'tip_id': tip_id, 'build_id': build_id,
              'fin_id': fin_id, 'sup_id': sup_id}
         response = self.client.get(
-            "/api/people_period", params=p)
+            "/api/people_period", params=p, auth=user)
         assert response.status_code == 200
         assert response.headers['Content-Type'] == "application/xml"
         # root = ET.fromstring(response.text)
@@ -84,7 +85,7 @@ class TestApi:
         p = {'tip_id': tip_id, 'build_id': build_id,
              'fin_id': fin_id, 'sup_id': sup_id}
         response = self.client.get(
-            "/api/counter", params=p)
+            "/api/counter", params=p, auth=user)
         assert response.status_code == 200
         assert response.headers['Content-Type'] == "application/xml"
         root = ET.fromstring(response.text)
@@ -96,7 +97,7 @@ class TestApi:
         p = {'tip_id': tip_id, 'build_id': build_id,
              'fin_id': fin_id, 'sup_id': sup_id}
         response = self.client.get(
-            "/api/counter_value", params=p)
+            "/api/counter_value", params=p, auth=user)
         assert response.status_code == 200
         assert response.headers['Content-Type'] == "application/xml"
         root = ET.fromstring(response.text)
@@ -108,7 +109,7 @@ class TestApi:
         p = {'tip_id': tip_id, 'build_id': build_id,
              'fin_id': fin_id, 'sup_id': sup_id}
         response = self.client.get(
-            "/api/value", params=p)
+            "/api/value", params=p, auth=user)
         assert response.status_code == 200
         assert response.headers['Content-Type'] == "application/xml"
         root = ET.fromstring(response.text)
@@ -120,7 +121,7 @@ class TestApi:
         p = {'tip_id': tip_id, 'build_id': build_id,
              'fin_id': fin_id, 'sup_id': sup_id}
         response = self.client.get(
-            "/api/pay", params=p)
+            "/api/pay", params=p, auth=user)
         assert response.status_code == 200
         assert response.headers['Content-Type'] == "application/xml"
         root = ET.fromstring(response.text)
@@ -132,7 +133,7 @@ class TestApi:
         p = {'tip_id': tip_id, 'build_id': build_id,
              'fin_id': fin_id, 'sup_id': sup_id}
         response = self.client.get(
-            "/api/dolg", params=p)
+            "/api/dolg", params=p, auth=user)
         assert response.status_code == 200
         assert response.headers['Content-Type'] == "application/xml"
         root = ET.fromstring(response.text)

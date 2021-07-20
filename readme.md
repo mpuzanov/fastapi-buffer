@@ -1,4 +1,4 @@
-# Выгрузка информации для сайта ric018.ru
+# Выгрузка информации для сайта
 
 ## Виды выгрузок
 
@@ -20,9 +20,9 @@ windows: `source venv/Scripts/activate`
 
 ## запуск сервиса
 
-uvicorn backend.buffer.main:app --reload
+uvicorn backend.buffer.main:app --reload --port=8001
 
 ## тестирование
 
 >pytest -vx  
->pytest -v backend/tests/test_api_pd.py
+>pytest -v backend/tests/test_api_pd.py -s
