@@ -17,6 +17,7 @@
 ## запуск виртуального окружения
 
 windows: `source venv/Scripts/activate`
+linux: `source venv/bin/activate`
 
 ## запуск сервиса
 
@@ -26,3 +27,19 @@ uvicorn backend.buffer.main:app --reload --port=8001
 
 >pytest -vx  
 >pytest -v backend/tests/test_api_pd.py -s
+
+## Команды по docker
+
+docker-compose up --build
+docker-compose up
+
+docker build -t puzanovma/fastapi-buffer -f ./backend/Dockerfile .
+docker run -d -p 8001:8001 --name buffer-container  puzanovma/fastapi-buffer 
+
+docker rm -vf $(docker ps -a -q)
+docker rmi $(docker images -f dangling=true -q)
+
+curl 127.0.0.1:8001
+
+# Запуск тестов в Linux
+pytest-3

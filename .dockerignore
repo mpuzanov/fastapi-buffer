@@ -1,0 +1,8 @@
+.vscode
+release
+*.exe
+.log
+.bat
+.git
+__pycache__
+.pytest_cache
