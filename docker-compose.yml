@@ -12,3 +12,14 @@ services:
       - 8001:8001
     env_file:
       - ./backend/buffer/.env
+    environment: 
+      - REDIS_HOST=redis
+    depends_on:
+      - redis      
+  
+  redis:
+    image: redis:6.2-alpine
+    ports:
+        - 6379:6379
+    environment:
+        - ALLOW_EMPTY_PASSWORD=yes

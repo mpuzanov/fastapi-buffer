@@ -25,6 +25,8 @@ class Settings(BaseSettings):
     jwt_algorithm: str = 'HS256'
     jwt_expires_s: int = 3600
     log_level: str = 'DEBUG' if debug else 'INFO'
+    redis_host: str = 'localhost'
+    redis_port: int = 6379
 
 
 settings = Settings()

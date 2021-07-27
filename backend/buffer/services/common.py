@@ -10,7 +10,7 @@ from fastapi import (
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 from sqlalchemy import text
-from ..database import get_session
+from ..database import get_session, DbRedis
 from ..config import logger
 from ..models import Formats
 
@@ -18,6 +18,7 @@ from ..models import Formats
 class BaseServices:
     def __init__(self, session: Session = Depends(get_session)):
         self.session = session
+        self.db_redis = DbRedis()
 
     def _execute(self, query, params=None):
         """ Возвращаем курсор выполнения запроса"""
@@ -82,7 +83,17 @@ class TipService(BaseServices):
                     FOR JSON PATH, ROOT ('tips')
                 ) as result
                 """
-        return self._get_execute_result(sql, None)
+        
+        key = f'{__class__.__name__} {format.value}'
+        logger.debug(key)
+        data = self.db_redis.get(key)  # проверим redis
+        if data:
+            return data
+        else:
+            data = self._get_execute_result(sql, None)
+            self.db_redis.set(key, data)  # сохраняем в redis
+
+        return data
 
 
 class FinService(BaseServices):
@@ -103,7 +114,17 @@ class FinService(BaseServices):
                 FOR JSON PATH, ROOT ('finperiods')
             ) as result
             """
-        return self._get_execute_result(sql, None)
+
+        key = f'{__class__.__name__} {format.value}'
+        logger.debug(key)
+        data = self.db_redis.get(key)  # проверим redis
+        if data:
+            return data
+        else:
+            data = self._get_execute_result(sql, None)
+            self.db_redis.set(key, data)  # сохраняем в redis
+
+        return data
 
 
 class SupService(BaseServices):
@@ -124,7 +145,17 @@ class SupService(BaseServices):
                 FOR JSON PATH, ROOT ('suppliers')
             ) as result
             """
-        return self._get_execute_result(sql, None)
+
+        key = f'{__class__.__name__} {format.value}'
+        logger.debug(key)
+        data = self.db_redis.get(key)  # проверим redis
+        if data:
+            return data
+        else:
+            data = self._get_execute_result(sql, None)
+            self.db_redis.set(key, data)  # сохраняем в redis
+
+        return data
 
 
 class TownService(BaseServices):
@@ -143,7 +174,17 @@ class TownService(BaseServices):
             sql = self.sql_xml
         else:
             sql = self.sql_json
-        return self._get_execute_result(sql, None)
+        
+        key = f'{__class__.__name__} {format.value}'
+        logger.debug(key)
+        data = self.db_redis.get(key)  # проверим redis
+        if data:
+            return data
+        else:
+            data = self._get_execute_result(sql, None)
+            self.db_redis.set(key, data)  # сохраняем в redis
+
+        return data
 
 
 class StreetService(BaseServices):
@@ -162,4 +203,14 @@ class StreetService(BaseServices):
             sql = self.sql_xml
         else:
             sql = self.sql_json
-        return self._get_execute_result(sql, params={'town_id': town_id})
+        
+        key = f'{__class__.__name__} {town_id} {format.value}'
+        logger.debug(key)
+        data = self.db_redis.get(key)  # проверим redis
+        if data:
+            return data
+        else:
+            data = self._get_execute_result(sql, params={'town_id': town_id})
+            self.db_redis.set(key, data)  # сохраняем в redis
+
+        return data
