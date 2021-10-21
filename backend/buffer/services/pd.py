@@ -117,7 +117,10 @@ class XmlKvitancia:
             for col in row_columns:
                 root_item.set(col, str(row.get(col)))
 
-            res_ls = [d for d in rows_detail if d["nomerls"] == row.get('nomerls')]
+            # ic(len(rows_detail))
+            # print(rows_detail)
+            # ic(row.get('occ'))
+            res_ls = [d for d in rows_detail if d['occ'] == row.get('occ')]
             # ic(len(res_ls))
             for row_detail in res_ls:
                 root_detail = ET.SubElement(root_item, 'nachislenie')
@@ -125,7 +128,7 @@ class XmlKvitancia:
                     root_detail.set(col, str(row_detail.get(col)))
 
             # ic(row.get('nomerls'))
-            filter_ls = [d for d in rows_added if d["occ"] == int(row.get('nomerls'))]
+            filter_ls = [d for d in rows_added if d["occ"] == int(row.get('occ'))]
             # ic(len(filter_ls))
             for row_detail in filter_ls:
                 # ic(row_detail)
@@ -134,7 +137,7 @@ class XmlKvitancia:
                     root_detail.set(col, str(row_detail.get(col)))
 
             # ========================================================================
-            filter_ls = [d for d in rows_norma if d["occ"] == int(row.get('nomerls'))]
+            filter_ls = [d for d in rows_norma if d["occ"] == int(row.get('occ'))]
             for row_detail in filter_ls:
                 # ic(row_detail)
                 root_detail = ET.SubElement(root_item, 'nachislenie')

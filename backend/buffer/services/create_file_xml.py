@@ -48,6 +48,7 @@ class XmlKvitancia:
                                       platelshik=row.platelshik,
                                       nomerls=row.nomerls,
                                       lc_numer=row.lc_numer,
+                                      occ=row.occ,
                                       pomeshenie=row.pomeshenie,
                                       uk_rekvizity=row.uk_rekvizity,
                                       # ki_passport="" ki_buhgalteria="" ki_dispetcher="" ki_avaria="" ki_uchastor=""
@@ -76,7 +77,7 @@ class XmlKvitancia:
                                       size_oi_hv_gv_vo=row.size_oi_hv_gv_vo,
                                       size_oi_el=row.overdue_start,
                                       )
-            res_ls = [detail for detail in rows_detail if detail["nomerls"] == row.nomerls]
+            res_ls = [detail for detail in rows_detail if detail["occ"] == row.occ]
             # print(res_ls)
             for row_detail in res_ls:
                 ET.SubElement(root_item, 'nachislenie', vid=row_detail.vid,
