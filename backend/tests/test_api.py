@@ -5,8 +5,8 @@ import pytest
 from .conftest import user
 
 test_data = [   # tip_id, build_id, fin_id, sup_id
-    (1, 6786, None, None),
-    (1, 6785, None, 345),
+    (1, 6786, 233, None),
+    (1, 6785, 233, 345),
 ]
 
 

@@ -38,7 +38,7 @@ class AuthService:
                 .first()
         )
 
-        if not user:
+        if not user or user.pswd is None:
             raise exception
 
         if not self.verify_password(credentials.password, user.pswd):
