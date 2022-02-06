@@ -1,8 +1,7 @@
-.vscode
-release
-*.exe
+**/.git
+**/__pycache__
+**/.pytest_cache
+**/.idea
+**/.vscode
+
 .log
-.bat
-.git
-__pycache__
-.pytest_cache
